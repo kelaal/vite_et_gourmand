@@ -1,0 +1,133 @@
+/* ===== FOOTER ===== */
+.footer {
+    background-color: #0b1f14;
+    color: #faf9f6;
+    padding: 70px 20px 25px;
+    font-family: var(--body-font);
+    position: relative;
+}
+
+.footer__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 40px;
+}
+
+.footer__brand .footer__logo {
+    display: block;
+    height: 48px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.footer__brand p {
+    color: #cfd8dc;
+    line-height: 1.65;
+    font-size: 0.95rem;
+}
+
+.footer h3 {
+    color: #f59e0b;
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 35px;
+    height: 2px;
+    background-color: var(--Terracotta);
+}
+
+.footer p,
+.footer li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #cfd8dc;
+}
+
+.footer__nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer__nav li {
+    margin-bottom: 10px;
+}
+
+.footer__nav a,
+.footer__links a {
+    color: #cfd8dc;
+    text-decoration: none;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    display: inline-block;
+}
+
+.footer__nav a:hover,
+.footer__links a:hover {
+    color: #f59e0b;
+    padding-left: 5px;
+}
+
+/* Horaires dynamiques */
+.footer__hours ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer__hours li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+}
+
+.footer__hours li:last-child {
+    border-bottom: none;
+}
+
+.footer__hours .day-name {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.footer__hours .day-time {
+    color: #ffca28;
+}
+
+.footer__hours .day-closed {
+    color: #b0bec5;
+    font-style: italic;
+}
+
+/* Barre de bas de page */
+.footer__bottom {
+    max-width: 1200px;
+    margin: 50px auto 0;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #90a4ae;
+}
+
+.footer__links {
+    display: flex;
+    gap: 15px;
+}

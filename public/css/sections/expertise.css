@@ -1,0 +1,172 @@
+/* ===== SECTION NOTRE SAVOIR-FAIRE / EXPERTISE ===== */
+.expertise {
+    position: relative;
+    padding: 100px 20px;
+    background: linear-gradient(145deg, #141f19 0%, #1c1b1b 100%);
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.expertise::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(210, 105, 30, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.expertise__container {
+    position: relative;
+    z-index: 2;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.expertise__header {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 60px auto;
+}
+
+.expertise__subtitle {
+    color: var(--Terracotta);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    display: block;
+    font-family: var(--body-font);
+}
+
+.expertise__title {
+    color: #ffffff;
+    font-family: var(--heading-font);
+    font-size: clamp(2.2rem, 3.8vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 18px;
+    line-height: 1.2;
+}
+
+.expertise__lead {
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+    color: #d1d5db;
+    line-height: 1.7;
+    margin: 0 auto;
+}
+
+.expertise__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+}
+
+.expertise__card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    padding: 40px 24px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.expertise__card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--Terracotta);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.expertise__card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(210, 105, 30, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.expertise__card:hover::after {
+    width: 60px;
+}
+
+.expertise__icon_wrapper {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(210, 105, 30, 0.25) 0%, rgba(210, 105, 30, 0.08) 100%);
+    border: 1px solid rgba(210, 105, 30, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.expertise__card:hover .expertise__icon_wrapper {
+    transform: scale(1.12) rotate(4deg);
+    background: linear-gradient(135deg, rgba(210, 105, 30, 0.4) 0%, rgba(210, 105, 30, 0.15) 100%);
+    border-color: var(--Terracotta);
+}
+
+.expertise__icon_wrapper img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.expertise__card h3 {
+    color: #ffffff;
+    font-family: var(--heading-font);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+}
+
+.expertise__card p {
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #b0bec5;
+    margin: 0;
+}
+
+/* Breakpoints Responsive */
+@media (max-width: 1100px) {
+    .expertise__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+}
+
+@media (max-width: 650px) {
+    .expertise {
+        padding: 70px 18px;
+    }
+
+    .expertise__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .expertise__card {
+        padding: 32px 20px;
+    }
+}

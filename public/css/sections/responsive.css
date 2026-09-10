@@ -1,0 +1,122 @@
+/* ===== RESPONSIVE GLOBALE ===== */
+
+/* Tablette (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .hero {
+        min-height: 650px;
+        height: auto;
+        padding: 120px 0 60px 0;
+    }
+
+    .hero_navbar {
+        left: 20px;
+        right: 20px;
+        padding: 10px 20px;
+    }
+
+    .hero_navbar__menu ul {
+        gap: 20px;
+    }
+}
+
+/* Mobile (max-width: 820px) */
+@media (max-width: 820px) {
+    .hero {
+        padding: 110px 0 50px 0;
+        text-align: center;
+    }
+
+    .hero_section__content {
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .hero_section__actions {
+        justify-content: center;
+    }
+
+    .hero_navbar {
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        padding: 10px 18px;
+    }
+
+    .hero_navbar__toggle {
+        display: flex;
+    }
+
+    .hero_navbar__cta {
+        display: none;
+    }
+
+    .hero_navbar__menu {
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 0;
+        right: 0;
+        background-color: var(--Ocre);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        padding: 25px;
+        display: none;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .hero_navbar__menu.is-open {
+        display: block;
+        animation: fadeInDown 0.3s ease;
+    }
+
+    .hero_navbar__menu ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .hero_navbar__menu .mobile-cta {
+        display: inline-block;
+        margin-top: 10px;
+        background-color: var(--Terracotta);
+        color: #fff;
+        padding: 10px 24px;
+        border-radius: 50px;
+    }
+}
+
+/* Petit mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .hero_navbar__logo img {
+        height: 32px;
+    }
+
+    .hero_section__actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .menu_card__cta {
+        flex-direction: column;
+    }
+
+    .avis__form-wrapper {
+        padding: 25px 18px;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

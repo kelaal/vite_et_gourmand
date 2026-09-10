@@ -1,0 +1,12 @@
+# Environnement & Données sensibles
+.env
+.env.local
+
+# Logs & Fichiers temporaires
+*.log
+.DS_Store
+Thumbs.db
+
+# Dépendances éventuelles
+vendor/
+node_modules/

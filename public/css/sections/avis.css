@@ -1,0 +1,333 @@
+/* ===== SECTION AVIS ===== */
+.avis {
+    padding: 85px 20px;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.avis__header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+}
+
+.avis__subtitle {
+    color: var(--Terracotta);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    display: block;
+    font-family: var(--body-font);
+}
+
+.avis__title {
+    font-family: var(--heading-font);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: var(--Anthracite);
+    font-weight: 700;
+}
+
+/* Alertes Flash pour dépôt d'avis */
+.alert {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    padding: 16px 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.alert--success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.alert__close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+}
+
+.alert__close:hover {
+    opacity: 1;
+}
+
+/* Conteneur des cartes d'avis */
+.avis__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+}
+
+.avis__carte {
+    background: #ffffff;
+    border: 1px solid #ede8e3;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avis__carte:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(210, 105, 30, 0.1);
+}
+
+.avis__quote_icon {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-family: var(--heading-font);
+    font-size: 3rem;
+    color: rgba(210, 105, 30, 0.15);
+    line-height: 1;
+}
+
+.avis__etoiles {
+    color: #f59e0b;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.avis__commentaire {
+    font-family: var(--body-font);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #4a4a4a;
+    font-style: italic;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+.avis__client_info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0ece7;
+}
+
+.avis__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--Terracotta);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+}
+
+.avis__client_name {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--Anthracite);
+}
+
+.avis__client_tag {
+    font-size: 0.8rem;
+    color: #888;
+    font-family: var(--body-font);
+}
+
+/* Formulaire d'avis (Connecté) */
+.avis__form-wrapper {
+    max-width: 650px;
+    margin: 0 auto;
+    background: var(--Ocre);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(210, 105, 30, 0.15);
+}
+
+.avis__form-wrapper h3 {
+    font-family: var(--heading-font);
+    font-size: 1.6rem;
+    color: var(--Anthracite);
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.avis__form-wrapper p {
+    text-align: center;
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    font-family: var(--body-font);
+}
+
+.avis__user_posting {
+    background: rgba(0, 66, 37, 0.08);
+    border: 1px solid rgba(0, 66, 37, 0.2);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    color: var(--Tertiary);
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.avis__form .form-group {
+    margin-bottom: 20px;
+}
+
+.avis__form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--Anthracite);
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+}
+
+.avis__form select,
+.avis__form textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1.5px solid #dcdcdc;
+    border-radius: 12px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.avis__form select:focus,
+.avis__form textarea:focus {
+    outline: none;
+    border-color: var(--Terracotta);
+    box-shadow: 0 0 0 3px rgba(210, 105, 30, 0.15);
+}
+
+.avis__form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-avis-submit {
+    width: 100%;
+    background-color: var(--Terracotta);
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 15px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-family: var(--body-font);
+}
+
+.btn-avis-submit:hover {
+    background-color: #b75513;
+    transform: translateY(-2px);
+}
+
+/* Boîte d'invitation à la connexion (Visiteur non connecté) */
+.avis__auth_box {
+    max-width: 650px;
+    margin: 0 auto;
+    background: var(--Ocre);
+    padding: 45px 35px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1.5px dashed rgba(210, 105, 30, 0.3);
+    text-align: center;
+}
+
+.avis__auth_icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(210, 105, 30, 0.12);
+    color: var(--Terracotta);
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px auto;
+}
+
+.avis__auth_box h3 {
+    font-family: var(--heading-font);
+    font-size: 1.55rem;
+    color: var(--Anthracite);
+    margin-bottom: 10px;
+}
+
+.avis__auth_box p {
+    color: #666;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 25px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.avis__auth_actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-avis-login {
+    display: inline-block;
+    background-color: var(--Terracotta);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 13px 30px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-avis-login:hover {
+    background-color: #b75513;
+    transform: translateY(-2px);
+}
+
+.btn-avis-signup {
+    display: inline-block;
+    background: transparent;
+    color: var(--Anthracite);
+    border: 1.5px solid #dcdcdc;
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 13px 25px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    transition: all 0.2s ease;
+}
+
+.btn-avis-signup:hover {
+    border-color: var(--Terracotta);
+    color: var(--Terracotta);
+}
