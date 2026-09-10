@@ -4,7 +4,12 @@
 @import url("sections/presentation.css");
 @import url("sections/expertise.css");
 @import url("sections/menus.css");
+@import url("sections/catalogue.css");
+@import url("sections/menu-detail.css");
+@import url("sections/commander.css");
 @import url("sections/avis.css");
+@import url("sections/auth.css");
+@import url("sections/espace.css");
 @import url("sections/footer.css");
 @import url("sections/responsive.css");
 

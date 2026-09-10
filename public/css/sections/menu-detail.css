@@ -1,0 +1,712 @@
+/* ===== PAGE DÉTAIL MENU (menu-detail.php) ===== */
+
+/* Hero Menu */
+.menu-hero {
+    position: relative;
+    margin-top: 70px; /* Compensation navbar fixe */
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.menu-hero__gallery {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.menu-hero__main-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.menu-hero__main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.menu-hero:hover .menu-hero__main-image img {
+    transform: scale(1.02);
+}
+
+.menu-hero__thumbnails {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    padding: 0 16px;
+    z-index: 10;
+}
+
+.menu-hero__thumb {
+    width: 100px;
+    height: 70px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+.menu-hero__thumb:hover,
+.menu-hero__thumb:focus {
+    opacity: 1;
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+}
+
+.menu-hero__thumb.is-active {
+    opacity: 1;
+    border-color: var(--Terracotta);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.menu-hero__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu-hero__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 24px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 48px;
+    align-items: start;
+}
+
+.menu-hero__badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.menu-hero__title {
+    font-family: var(--heading-font);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--Anthracite);
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.menu-hero__description {
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 32px;
+}
+
+/* Meta infos */
+.menu-hero__meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-meta {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 140px;
+}
+
+.menu-meta__icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.menu-meta__label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: var(--body-font);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.menu-meta__value {
+    display: block;
+    font-family: var(--heading-font);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--Anthracite);
+}
+
+.menu-meta__value--price {
+    color: var(--Tertiary);
+}
+
+.menu-meta__value--low {
+    color: #e65100;
+}
+
+.text-danger { color: #c62828; }
+
+/* Prix indicatif */
+.menu-hero__price-indicative {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: var(--Ocre);
+    border-radius: 12px;
+    border: 1px solid rgba(210, 105, 30, 0.15);
+}
+
+.menu-hero__price-label {
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.menu-hero__price-value {
+    font-family: var(--heading-font);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--Terracotta);
+}
+
+/* Sélecteur quantité */
+.menu-hero__quantity {
+    margin-bottom: 32px;
+}
+
+.menu-hero__quantity-label {
+    display: block;
+    font-family: var(--body-font);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--Anthracite);
+    margin-bottom: 10px;
+}
+
+.menu-hero__quantity-input {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid #dcdcdc;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 200px;
+}
+
+.qty-btn {
+    width: 48px;
+    height: 48px;
+    background: #fafafa;
+    border: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--Anthracite);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-btn:hover:not(:disabled) {
+    background: var(--Ocre);
+    color: var(--Terracotta);
+}
+
+.qty-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.qty-input {
+    width: 70px;
+    height: 48px;
+    border: none;
+    text-align: center;
+    font-family: var(--heading-font);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--Anthracite);
+    background: #ffffff;
+    -moz-appearance: textfield;
+}
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.qty-input:focus {
+    outline: none;
+}
+
+/* CTA */
+.menu-hero__cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-hero__cta-note {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+    font-family: var(--body-font);
+    margin: 0;
+}
+
+.menu-hero__cta-note a {
+    color: var(--Terracotta);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Contenu détaillé */
+.menu-detail {
+    padding: 60px 20px 80px;
+    background: var(--Ocre);
+}
+
+.menu-detail__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 48px;
+    align-items: start;
+}
+
+/* Sections */
+.menu-section {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.menu-section--highlight {
+    border-color: rgba(210, 105, 30, 0.2);
+    background: linear-gradient(135deg, #fff 0%, #fffaf5 100%);
+}
+
+.menu-section__header {
+    margin-bottom: 24px;
+}
+
+.menu-section__title {
+    font-family: var(--heading-font);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--Anthracite);
+    margin-bottom: 6px;
+}
+
+.menu-section__subtitle {
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    color: #777;
+}
+
+.menu-section__content {
+    font-family: var(--body-font);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #444;
+}
+
+.menu-section__empty {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 40px 20px;
+}
+
+/* Plats */
+.plats-group {
+    margin-bottom: 32px;
+}
+
+.plats-group:last-child {
+    margin-bottom: 0;
+}
+
+.plats-group__title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--heading-font);
+    font-size: 1.25rem;
+    color: var(--Anthracite);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--Ocre);
+}
+
+.plats-group__icon {
+    font-size: 1.4rem;
+}
+
+.plats-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.plat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--Ocre);
+    border-radius: 12px;
+    border: 1px solid rgba(210, 105, 30, 0.1);
+    flex-wrap: wrap;
+}
+
+.plat-item__main {
+    flex: 1;
+    min-width: 200px;
+}
+
+.plat-item__title {
+    font-family: var(--heading-font);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--Anthracite);
+    margin-bottom: 6px;
+}
+
+.plat-item__desc {
+    font-family: var(--body-font);
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.plat-item__allergenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+/* Allergènes */
+.allergen-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    background: rgba(210, 105, 30, 0.1);
+    color: var(--Terracotta-dark);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--body-font);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.allergen-tag--large {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+}
+
+.allergenes-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.allergenes-notice {
+    font-family: var(--body-font);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #666;
+    background: rgba(210, 105, 30, 0.05);
+    padding: 16px;
+    border-radius: 10px;
+    border-left: 3px solid var(--Terracotta);
+    margin: 0;
+}
+
+.allergenes-notice strong {
+    color: var(--Anthracite);
+}
+
+/* Conditions */
+.conditions-box {
+    background: #fff8f0;
+    border: 1px solid rgba(210, 105, 30, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #444;
+    white-space: pre-wrap;
+}
+
+/* Sidebar Résumé */
+.menu-detail__sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+.order-summary {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.order-summary__title {
+    font-family: var(--heading-font);
+    font-size: 1.25rem;
+    color: var(--Anthracite);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.order-summary__menu {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.order-summary__img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.order-summary__info h3 {
+    font-family: var(--heading-font);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--Anthracite);
+    margin-bottom: 6px;
+}
+
+.order-summary__meta {
+    display: flex;
+    gap: 6px;
+}
+
+.order-summary__divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 20px 0;
+}
+
+.order-summary__quantity {
+    margin-bottom: 20px;
+}
+
+.order-summary__quantity label {
+    display: block;
+    font-family: var(--body-font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--Anthracite);
+    margin-bottom: 8px;
+}
+
+.qty-input-group {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid #dcdcdc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.qty-input--center {
+    width: 60px;
+    height: 44px;
+    border: none;
+    text-align: center;
+    font-family: var(--heading-font);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--Anthracite);
+    background: #ffffff;
+    -moz-appearance: textfield;
+}
+
+.qty-input--center::-webkit-outer-spin-button,
+.qty-input--center::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Pricing */
+.order-summary__pricing {
+    margin-bottom: 24px;
+}
+
+.order-summary__line {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    color: #444;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.order-summary__line:last-of-type {
+    border-bottom: none;
+}
+
+.order-summary__line--delivery {
+    color: #e65100;
+}
+
+.order-summary__line--discount {
+    color: #2e7d32;
+}
+
+.order-summary__total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    margin-top: 8px;
+    border-top: 2px solid var(--Ocre);
+    font-family: var(--heading-font);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--Anthracite);
+}
+
+.order-summary__cta {
+    margin-bottom: 16px;
+}
+
+.order-summary__note {
+    font-family: var(--body-font);
+    font-size: 0.75rem;
+    color: #888;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Responsive Menu Detail */
+@media (max-width: 1024px) {
+    .menu-hero__content {
+        grid-template-columns: 1fr 320px;
+        gap: 32px;
+    }
+
+    .menu-detail__container {
+        grid-template-columns: 1fr 300px;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 860px) {
+    .menu-hero {
+        margin-top: 65px;
+    }
+
+    .menu-hero__gallery {
+        height: 350px;
+    }
+
+    .menu-hero__content {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 32px 20px;
+    }
+
+    .menu-hero__meta {
+        gap: 20px;
+    }
+
+    .menu-detail {
+        padding: 40px 16px 60px;
+    }
+
+    .menu-detail__container {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-detail__sidebar {
+        position: static;
+        order: -1; /* Avant le contenu principal sur mobile */
+    }
+
+    .order-summary {
+        padding: 20px;
+    }
+
+    .menu-section {
+        padding: 24px 20px;
+    }
+
+    .plat-item {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .plat-item__allergenes {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-hero__gallery {
+        height: 280px;
+    }
+
+    .menu-hero__thumbnails {
+        display: none; /* Masquer sur très petit écran */
+    }
+
+    .menu-hero__meta {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .menu-hero__price-indicative {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .menu-hero__cta {
+        gap: 10px;
+    }
+
+    .btn--lg {
+        padding: 16px 24px;
+        font-size: 1rem;
+    }
+}
