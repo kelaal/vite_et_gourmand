@@ -8,7 +8,7 @@ Application web de traiteur gastronomique sur-mesure à Bordeaux, développée d
 
 * **Serveur Web :** Apache (XAMPP sur port 80)
 * **Langage Back-End :** PHP 8.2 (Architecture modulaire & Design Pattern *Repository*)
-* **Front-End :** HTML5 sémantique (Conforme RGAA), CSS3 Vanilla moderne & modulaire (Playfair Display, Plus Jakarta Sans), JavaScript Vanilla
+* **Front-End :** HTML5 sémantique (Conforme RGAA), CSS3 Vanilla moderne & modulaire (Playfair Display, Plus Jakarta Sans), JavaScript Vanilla (ES6+)
 * **Bases de Données (Hybride) :**
   * **Relationnelle (MySQL) :** Gestion relationnelle complète (Utilisateurs, Menus, Plats, Allergènes, Commandes, Avis, Horaires).
   * **NoSQL (MongoDB) :** Base `vite_et_gourmand_nosql`, collection `statistiques_commandes` alimentée en double-écriture pour l'agrégation des statistiques et du chiffre d'affaires.
@@ -71,40 +71,159 @@ Lancez Apache et MySQL via le panneau de contrôle XAMPP, puis ouvrez votre navi
 
 ---
 
+## ✅ Fonctionnalités Implémentées (ECF Conformes)
+
+### 🔐 Authentification & Sécurité
+- **Connexion** : Email + MDP, redirection selon rôle (admin/employé/client), remember-me (30 jours)
+- **Inscription** : Validation RGPD, MDP fort (10 car + maj/min/chiffre/spécial), hash ARGON2ID, auto-login
+- **Mot de passe oublié** : Token sécurisé 32 bytes, expiration 1h, envoi email (simulation log)
+- **Reset MDP** : Validation token + expiration, nouveau MDP avec règles de force
+- **Déconnexion** : Destruction session + cookies HttpOnly
+- **Middleware** : `requireAuth()`, `requireRole()`, `requireEmploye()`, `requireAdmin()`, protection CSRF
+
+### 🏠 Page d'Accueil (`index.php`)
+- Hero section avec background responsive (AVIF/WebP/JPEG)
+- Présentation entreprise (25 ans, Julie & José)
+- Savoir-faire : Qualité, Sur-mesure, Réactivité, Artisanal
+- Menus vitrine (3 à la une) avec badges thème/régime
+- Avis clients validés uniquement (statut `VALIDE`)
+- Formulaire dépôt avis (connecté) ou invitation connexion (visiteur)
+
+### 📞 Page Contact (`contact.php`)
+- **Formulaire public** : Sujet (select), Email, Message (textarea min 20 car)
+- **Validation** : Côté client (HTML5) + serveur (CSRF, longueur, format email)
+- **Envoi email** : Notification équipe (`contact@viteetgourmand.fr`) avec Reply-To expéditeur
+- **Message flash** : Succès animé ou erreurs inline
+- **Infos côte** : Coordonnées, livraison, horaires, carte OpenStreetMap interactive
+- **CTA** : Lien vers menus si prêt à commander
+
+### 📜 Pages Légales
+| Page | Contenu |
+|------|---------|
+| `cgv.php` | 12 articles : Objet, Commande, Prix/Paiement, Livraison, Matériel (prêt + 600€ pénalité), Rétractation (exclue Art. L.221-28), Responsabilité, Allergènes (Règlement INCO), RGPD, Propriété intellectuelle, Droit applicable + Médiation, Dispositions générales |
+| `mentions-legales.php` | Éditeur (SIRET, RCS, TVA, gérant), Hébergeur (OVHcloud), Propriété intellectuelle, RGPD détaillé (tableau finalités/bases/durées/droits), Cookies (tableau types/durée/consentement), Responsabilité, Droit applicable, Contact DPO/CNIL |
+
+### 📋 Catalogue Menus (`menus.php`)
+- **Formulaire public** : Sujet (select), Email, Message (textarea min 20 car)
+- **Validation** : Côté client (HTML5) + serveur (CSRF, longueur, format email)
+- **Envoi email** : Notification équipe (`contact@viteetgourmand.fr`) avec Reply-To expéditeur
+- **Message flash** : Succès animé ou erreurs inline
+- **Infos côte** : Coordonnées, livraison, horaires, carte OpenStreetMap interactive
+- **CTA** : Lien vers menus si prêt à commander
+
+### 📋 Catalogue Menus (`menus.php`)
+- **Filtres dynamiques AJAX** (sans rechargement) :
+  - Recherche texte (nom/description)
+  - Prix maximum (slider) + Fourchette min/max (inputs)
+  - Thème (Noël, Pâques, Classique, Événement, Mariage)
+  - Régime (Classique, Végétarien, Vegan, Sans gluten)
+  - Nombre de personnes minimum (slider)
+- Tri : Prix croissant/décroissant, Personnes, Nom A-Z
+- Pagination (12 par page)
+- Sidebar responsive : Fixe desktop, Drawer mobile avec toggle
+- Grille responsive `auto-fit minmax(320px)`
+
+### 🍽️ Détail Menu (`menu-detail.php`)
+- Galerie : Image principale + miniatures cliquables (navigation clavier)
+- Composition plats groupés : Entrées / Plats / Desserts
+- Allergènes par plat (tags) + Liste globale unique
+- Conditions délai/stockage mises en évidence (boîte alert)
+- Stock disponible temps réel + alerte rupture
+- **Calcul prix dynamique** : Sync quantité header ↔ sidebar
+- Remise 10% auto si quantité ≥ minimum + 5 personnes
+- CTA Commander : Connecté = direct, Visiteur = redirection login
+
+### 🛒 Processus Commande Complet
+| Page | Fonctionnalité |
+|------|----------------|
+| `commander.php` | Formulaire 3 sections (Client pré-rempli, Livraison, Quantité) + Récapitulatif sticky |
+| `commander-confirm.php` | Validation finale avec steps, détail facturation complet |
+| `commander-success.php` | Confirmation animée, numéro commande, étapes suivantes, info paiement |
+
+**Calculs Métier (ECF) :**
+- ✅ **Frais livraison** : Gratuit Bordeaux (33000,33100,33200,33300,33800), sinon 5,00 € + 0,59 €/km
+- ✅ **Remise 10%** : Auto si nb_personnes ≥ min_menu + 5
+- ✅ **Double insertion** : MySQL (relationnel) + MongoDB (`statistiques_commandes`)
+- ✅ **Historique statut** : Initial `en attente` tracé dans `commande_historique_statut`
+
+### 👤 Espace Client (`espace.php`)
+- **Mes Commandes** : Cartes avec badge statut, détail prix, actions (Voir détail, Annuler si `en attente`, Donner avis si `terminée`)
+- **Mon Profil** : Modification nom/prénom/GSM/adresse (email protégé)
+- **Sécurité** : Changement MDP avec validation force actuelle/nouveau/confirmation
+- **Modales AJAX** : Détail commande (`api/commande-detail.php`), Confirmation annulation, Dépôt avis
+
+### 🎨 Interface & Accessibilité (RGAA)
+- **Navbar fixe** : Effet scroll (ombre + compact), Hamburger mobile accessible (ARIA)
+- **Footer dynamique** : Horaires Lundi-Dimanche depuis BDD, mentions légales, CGV
+- **CSS Modulaire** : 11 fichiers sections + variables CSS, responsive mobile-first
+- **Formulaires** : Labels associés, messages d'erreur ARIA, validation HTML5 + JS
+- **Contraste** : Palette Terracotta/Crème/Anthracite/Ocre conforme
+
+### 📊 API & Endpoints
+- `api/menus-filtres.php` : POST JSON (filtres, pagination, tri) → menus filtrés
+- `api/commande-detail.php` : GET HTML fragment pour modale détail commande
+
+---
+
 ## 📂 Architecture du Projet
 
 ```text
-├── actions/             # Traitements des formulaires (POST)
-│   └── ajouter_avis.php
-├── config/              # Configuration & connexions
-│   ├── database.php     # Connexion PDO MySQL
-│   ├── mongo.php        # Connexion & helpers NoSQL MongoDB
-│   └── setup_db.php     # Script d'initialisation MySQL & MongoDB
-├── docs/                # Documents de cadrage & sujet ECF
-├── includes/            # Composants réutilisables (Navbar fixe, Footer dynamique)
-│   ├── navbar.php
-│   └── footer.php
-├── public/              # Ressources statiques
-│   ├── css/             # Feuilles de styles modulaires
-│   ├── img/             # Images & icônes SVG
-│   └── js/              # Scripts frontend
-├── repositories/        # Couche d'accès aux données (Repository Pattern)
+├── actions/                    # Traitements formulaires (POST)
+│   ├── ajouter_avis.php
+│   ├── connexion.php
+│   ├── inscription.php
+│   ├── deconnexion.php
+│   ├── mot-de-passe-oublie.php
+│   ├── reset-password.php
+│   └── contact.php             # Nouveau : traitement formulaire contact
+├── api/                        # Endpoints AJAX
+│   ├── commande-detail.php
+│   └── menus-filtres.php
+├── config/                     # Configuration & connexions
+│   ├── database.php            # PDO MySQL
+│   ├── mongo.php               # MongoDB Manager + helpers (insert, query, aggregate)
+│   ├── require_auth.php        # Middleware auth, rôles, CSRF, validation MDP
+│   └── setup_db.php            # Initialisation MySQL + MongoDB
+├── docs/                       # Documents de cadrage & sujet ECF
+├── includes/                   # Composants réutilisables
+│   ├── navbar.php              # Navbar fixe + hamburger mobile
+│   └── footer.php              # Footer + horaires dynamiques
+├── public/                     # Ressources statiques
+│   ├── css/
+│   │   ├── style.css           # Point d'entrée (imports)
+│   │   └── sections/           # 13 fichiers CSS modulaires (+ contact.css, + legal.css)
+│   ├── img/                    # Images (AVIF/WebP/JPEG) + SVG
+│   └── js/                     # Scripts frontend
+├── repositories/               # Repository Pattern (Accès données)
 │   ├── BaseRepository.php
-│   ├── MenuRepository.php
-│   ├── AvisRepository.php
-│   ├── UtilisateurRepository.php
-│   ├── CommandeRepository.php
-│   ├── HoraireRepository.php
-│   └── StatistiqueRepository.php
-├── sql/                 # Scripts SQL DDL et DML
-│   ├── schema.sql       # Schéma de base de données relationnelle
-│   └── fixtures.sql     # Jeu d'essai de démonstration
-├── .env.example         # Modèle des variables d'environnement
-├── .gitignore           # Fichiers ignorés par Git
-├── ECF_SUBJECT.md       # Cahier des charges & critères ECF
-├── PROJET_CONTEXT.md    # Source de vérité du projet
-├── README.md            # Documentation de déploiement
-└── index.php            # Page d'accueil dynamique
+│   ├── MenuRepository.php      # CRUD + filtres dynamiques + détails complets
+│   ├── AvisRepository.php      # CRUD + modération (EN_ATTENTE/VALIDE/REFUSE)
+│   ├── UtilisateurRepository.php # CRUD + rôles + toggle actif
+│   ├── CommandeRepository.php  # CRUD + double-insertion MySQL/MongoDB + historique
+│   ├── HoraireRepository.php   # CRUD horaires Lundi-Dimanche
+│   └── StatistiqueRepository.php # Agrégations MongoDB (graphiques, CA)
+├── sql/                        # Scripts SQL
+│   ├── schema.sql              # Schéma complet (13 tables, FK, index, ENUM)
+│   └── fixtures.sql            # Jeu d'essai (6 users, 5 menus, 14 plats, 14 allergènes, 3 commandes, 5 avis, 7 horaires)
+├── .env.example
+├── .gitignore
+├── ECF_SUBJECT.md              # Cahier des charges complet
+├── PROJET_CONTEXT.md           # Contexte projet pour IA
+├── README.md                   # Ce fichier
+├── index.php                   # Page d'accueil
+├── menus.php                   # Catalogue avec filtres AJAX
+├── menu-detail.php             # Détail menu complet
+├── commander.php               # Étape 1 commande
+├── commander-confirm.php       # Étape 2 confirmation
+├── commander-success.php       # Succès commande
+├── espace.php                  # Espace client (3 onglets + modales)
+├── connexion.php               # Login
+├── inscription.php             # Inscription
+├── mot-de-passe-oublie.php     # Demande reset
+├── reset-password.php          # Nouveau MDP
+├── contact.php                 # Formulaire contact + carte
+├── cgv.php                     # Conditions Générales de Vente
+├── mentions-legales.php        # Mentions légales (LCEN, RGPD, cookies)
 ```
 
 ---
@@ -112,8 +231,26 @@ Lancez Apache et MySQL via le panneau de contrôle XAMPP, puis ouvrez votre navi
 ## 🌿 Gestion des Branches Git (ECF)
 
 * `main` : Branche principale stable (code prêt pour la livraison / jury).
-* `dev` : Branche d'intégration et de développement.
+* `dev` : Branche d'intégration et de développement (branche courante).
 * `feature/*` : Branches pour chaque fonctionnalité spécifique.
 
 ---
-© 2026 Vite & Gourmand - Réalisé pour le Titre Professionnel DWWM.
+
+## 📋 Prochaines Étapes (Roadmap)
+
+- [ ] **Page Contact** : Formulaire public + envoi email notification équipe
+- [ ] **Espace Employé** (`employe/`) : Dashboard, gestion commandes (cycle 6 statuts), modération avis, CRUD menus/plats/allergènes/horaires
+- [ ] **Espace Administrateur** (`admin/`) : Dashboard stats MongoDB (graphiques commandes/menu, CA par période/filtres), gestion comptes employés (création, désactivation)
+- [ ] **Mentions Légales & CGV** : Pages statiques
+- [ ] **Emails réels** : Intégration PHPMailer (bienvenue, confirmation commande, reset MDP, notification avis, contact)
+- [ ] **Géocodage précis** : API Nominatim/OpenStreetMap pour calcul distance km exact
+- [ ] **Tests** : PHPUnit (repositories), Cypress/Playwright (E2E auth + commande)
+
+---
+
+## 📄 Licence & Contexte
+
+Projet réalisé dans le cadre de l'**ECF DWWM** — Titre Professionnel Développeur Web et Web Mobile.
+Sujet complet disponible dans `docs/Enonce ECF.pdf` et `ECF_SUBJECT.md`.
+
+© 2026 Vite & Gourmand — Bordeaux

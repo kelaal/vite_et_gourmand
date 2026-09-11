@@ -156,13 +156,17 @@ if (!empty($_SESSION['register_errors'])) {
                     <!-- Adresse postale -->
                     <div class="form-group">
                         <label for="adresse_postale">Adresse postale complète <span class="required" aria-hidden="true">*</span></label>
+                        <?php
+                        $adresseAria = isset($errors['adresse_postale']) ? 'adresse-error' : 'adresse-hint';
+                        ?>
                         <textarea id="adresse_postale"
                             name="adresse_postale"
                             class="form-input <?= isset($errors['adresse_postale']) ? 'is-invalid' : '' ?>"
                             rows="3"
                             required
                             autocomplete="street-address"
-                            aria-describedby="<?= isset($errors['adresse_postale']) ? 'adresse-error' : 'adresse-hint'"><?= htmlspecialchars($oldData['adresse_postale']) ?></textarea>
+                            aria-describedby="<?= htmlspecialchars($adresseAria) ?>"
+                        ><?= htmlspecialchars($oldData['adresse_postale']) ?></textarea>
                         <?php if (isset($errors['adresse_postale'])): ?>
                             <span class="form-error" id="adresse-error" role="alert"><?= htmlspecialchars($errors['adresse_postale']) ?></span>
                         <?php else: ?>
