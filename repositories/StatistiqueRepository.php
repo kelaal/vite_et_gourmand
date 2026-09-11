@@ -65,11 +65,14 @@ class StatistiqueRepository {
 
         $pipeline[] = [
             '$group' => [
-                '_id'                => '$menu_titre',
-                'menu_id'            => ['$first' => '$menu_id'],
-                'nombre_commandes'   => ['$sum' => 1],
-                'chiffre_affaires'   => ['$sum' => '$chiffre_affaires'],
-                'total_personnes'    => ['$sum' => '$nb_personnes'],
+                '_id'                    => '$menu_titre',
+                'menu_id'                => ['$first' => '$menu_id'],
+                'theme'                  => ['$first' => '$theme'],
+                'regime'                 => ['$first' => '$regime'],
+                'nombre_commandes'       => ['$sum' => 1],
+                'chiffre_affaires'       => ['$sum' => '$chiffre_affaires'],
+                'total_personnes'        => ['$sum' => '$nb_personnes'],
+                'total_frais_livraison'  => ['$sum' => '$frais_livraison'],
             ]
         ];
 

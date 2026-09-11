@@ -103,6 +103,29 @@ Lancez Apache et MySQL via le panneau de contrôle XAMPP, puis ouvrez votre navi
 | `cgv.php` | 12 articles : Objet, Commande, Prix/Paiement, Livraison, Matériel (prêt + 600€ pénalité), Rétractation (exclue Art. L.221-28), Responsabilité, Allergènes (Règlement INCO), RGPD, Propriété intellectuelle, Droit applicable + Médiation, Dispositions générales |
 | `mentions-legales.php` | Éditeur (SIRET, RCS, TVA, gérant), Hébergeur (OVHcloud), Propriété intellectuelle, RGPD détaillé (tableau finalités/bases/durées/droits), Cookies (tableau types/durée/consentement), Responsabilité, Droit applicable, Contact DPO/CNIL |
 
+### 👨‍🍳 Espace Employé (`employe/dashboard.php`)
+- **Dashboard KPI** : 6 cartes (en attente, préparation, livraison, terminées, avis à modérer, menus actifs)
+- **Gestion Commandes** : Tableau filtrable par statut/client, actions (voir détail, changer statut, annuler)
+- **Cycle Statuts (6 étapes)** : `en attente` → `acceptée` → `en préparation` → `en livraison` → `livrée` → `attente retour matériel` → `terminée`
+- **Annulation Employé** : Motif + mode contact (GSM/Email) obligatoires (règle ECF)
+- **Modération Avis** : Liste `EN_ATTENTE` avec boutons Valider/Refuser → statut `VALIDE`/`REFUSE`
+- **Gestion Menus** : Tableau CRUD (activer/désactiver, modifier, nouveau)
+- **Horaires** : Grille Lundi-Dimanche (ouverture/fermeture, ouvert/fermé), sauvegarde groupée
+- **Détail Commande** (`employe/commande-detail.php`) : Infos client, menu, facturation, matériel, historique statuts, actions
+
+### ⚙️ Espace Administrateur (`admin/dashboard.php`)
+- **Hérite de tout l'espace employé** + fonctionnalités exclusives :
+- **Gestion Équipe** : Tableau employés (nom, email, téléphone, rôle, statut, date création)
+  - Création compte employé : formulaire complet, **MDP généré affiché une seule fois** (copier), email notification (sans MDP)
+  - Activation/Désactivation (bloquer) employé via AJAX
+  - Protection : admin ne peut pas se bloquer lui-même
+- **Statistiques NoSQL (MongoDB)** :
+  - Graphique 1 : **Nombre de commandes par menu** (Chart.js, agrégation `statistiques_commandes`)
+  - Graphique 2 : **Chiffre d'affaires par menu** (Chart.js, sommes `chiffre_affaires`)
+  - Filtres : Par menu, date début/fin
+  - Tableau détaillé : Menu, thème, régime, nb commandes, total personnes, CA, frais livraison
+- **Navigation** : Lien vers vue employé + espace client
+
 ### 📋 Catalogue Menus (`menus.php`)
 - **Formulaire public** : Sujet (select), Email, Message (textarea min 20 car)
 - **Validation** : Côté client (HTML5) + serveur (CSRF, longueur, format email)
@@ -175,7 +198,16 @@ Lancez Apache et MySQL via le panneau de contrôle XAMPP, puis ouvrez votre navi
 │   ├── deconnexion.php
 │   ├── mot-de-passe-oublie.php
 │   ├── reset-password.php
-│   └── contact.php             # Nouveau : traitement formulaire contact
+│   ├── contact.php
+│   ├── employe/                # Actions employé
+│   │   ├── change-statut.php
+│   │   ├── annuler-commande.php
+│   │   ├── moderer-avis.php
+│   │   ├── update-horaires.php
+│   │   └── toggle-menu.php
+│   └── admin/                  # Actions admin
+│       ├── add-employe.php
+│       └── toggle-employe.php
 ├── api/                        # Endpoints AJAX
 │   ├── commande-detail.php
 │   └── menus-filtres.php
@@ -191,7 +223,7 @@ Lancez Apache et MySQL via le panneau de contrôle XAMPP, puis ouvrez votre navi
 ├── public/                     # Ressources statiques
 │   ├── css/
 │   │   ├── style.css           # Point d'entrée (imports)
-│   │   └── sections/           # 13 fichiers CSS modulaires (+ contact.css, + legal.css)
+│   │   └── sections/           # 14 fichiers CSS modulaires (+ contact.css, + legal.css, + admin.css)
 │   ├── img/                    # Images (AVIF/WebP/JPEG) + SVG
 │   └── js/                     # Scripts frontend
 ├── repositories/               # Repository Pattern (Accès données)
@@ -224,6 +256,11 @@ Lancez Apache et MySQL via le panneau de contrôle XAMPP, puis ouvrez votre navi
 ├── contact.php                 # Formulaire contact + carte
 ├── cgv.php                     # Conditions Générales de Vente
 ├── mentions-legales.php        # Mentions légales (LCEN, RGPD, cookies)
+├── employe/
+│   ├── dashboard.php           # Dashboard employé (commandes, avis, menus, horaires)
+│   └── commande-detail.php     # Détail commande pour équipe
+├── admin/
+│   └── dashboard.php           # Dashboard admin (tout employé + équipe + stats MongoDB)
 ```
 
 ---

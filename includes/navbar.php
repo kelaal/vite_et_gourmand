@@ -10,15 +10,22 @@ $isLoggedIn = !empty($_SESSION['utilisateur_id']);
 $userRole   = $_SESSION['role'] ?? 'utilisateur';
 $userPrenom = $_SESSION['prenom'] ?? '';
 $currentPage = $activePage ?? basename($_SERVER['PHP_SELF'], '.php');
+
+// Détecter si on est dans un sous-répertoire (employe/, admin/)
+$basePath = '';
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+if (str_contains($scriptName, '/employe/') || str_contains($scriptName, '/admin/')) {
+    $basePath = '../';
+}
 ?>
 <!-- BARRE DE NAVIGATION FIXE GLOBALE -->
 <nav class="site_navbar" id="siteNavbar" aria-label="Navigation principale">
     <div class="site_navbar__container">
-        
+
         <!-- Logo de la marque -->
         <div class="site_navbar__logo">
-            <a href="index.php" aria-label="Retour à l'accueil">
-                <img src="public/img/logo.svg" alt="Vite & Gourmand" width="145" height="40">
+            <a href="<?= $basePath ?>index.php" aria-label="Retour à l'accueil">
+                <img src="<?= $basePath ?>public/img/logo.svg" alt="Vite & Gourmand" width="145" height="40">
             </a>
         </div>
 
@@ -33,13 +40,13 @@ $currentPage = $activePage ?? basename($_SERVER['PHP_SELF'], '.php');
         <div class="site_navbar__menu" id="navMenu">
             <ul>
                 <li>
-                    <a href="index.php" class="<?= ($currentPage === 'index' || $currentPage === 'accueil') ? 'is-active' : '' ?>">Accueil</a>
+                    <a href="<?= $basePath ?>index.php" class="<?= ($currentPage === 'index' || $currentPage === 'accueil') ? 'is-active' : '' ?>">Accueil</a>
                 </li>
                 <li>
-                    <a href="menus.php" class="<?= ($currentPage === 'menus' || $currentPage === 'menu-detail') ? 'is-active' : '' ?>">Nos Menus</a>
+                    <a href="<?= $basePath ?>menus.php" class="<?= ($currentPage === 'menus' || $currentPage === 'menu-detail') ? 'is-active' : '' ?>">Nos Menus</a>
                 </li>
                 <li>
-                    <a href="contact.php" class="<?= ($currentPage === 'contact') ? 'is-active' : '' ?>">Contact</a>
+                    <a href="<?= $basePath ?>contact.php" class="<?= ($currentPage === 'contact') ? 'is-active' : '' ?>">Contact</a>
                 </li>
             </ul>
         </div>
@@ -48,15 +55,31 @@ $currentPage = $activePage ?? basename($_SERVER['PHP_SELF'], '.php');
         <div class="site_navbar__actions">
             <?php if ($isLoggedIn): ?>
                 <div class="site_navbar__user">
-                    <a href="espace.php" class="user_badge">
-                        <span class="user_icon">👤</span>
-                        <span class="user_label">Mon Espace (<?= htmlspecialchars(ucfirst($userRole)) ?>)</span>
-                    </a>
-                    <a href="actions/deconnexion.php" class="btn-nav-logout" title="Se déconnecter">Déconnexion</a>
+                    <?php if ($userRole === 'utilisateur'): ?>
+                        <!-- Client : lien vers son espace -->
+                        <a href="<?= $basePath ?>espace.php" class="user_badge">
+                            <span class="user_icon">👤</span>
+                            <span class="user_label">Mon Espace</span>
+                        </a>
+                    <?php elseif ($userRole === 'employe'): ?>
+                        <!-- Employé : lien vers dashboard employé -->
+                        <a href="<?= $basePath ?>employe/dashboard.php" class="user_badge">
+                            <span class="user_icon">👨‍🍳</span>
+                            <span class="user_label">Espace Équipe</span>
+                        </a>
+                    <?php elseif ($userRole === 'administrateur'): ?>
+                        <!-- Admin : lien vers dashboard admin -->
+                        <a href="<?= $basePath ?>admin/dashboard.php" class="user_badge">
+                            <span class="user_icon">⚙️</span>
+                            <span class="user_label">Administration</span>
+                        </a>
+                    <?php endif; ?>
+                    <!-- Déconnexion avec chemin absolu depuis la racine -->
+                    <a href="<?= $basePath ?>actions/deconnexion.php" class="btn-nav-logout" title="Se déconnecter">Déconnexion</a>
                 </div>
             <?php else: ?>
-                <a href="connexion.php" class="btn-nav-login <?= ($currentPage === 'connexion') ? 'is-active' : '' ?>">Connexion</a>
-                <a href="menus.php" class="btn-nav-cta">Commander</a>
+                <a href="<?= $basePath ?>connexion.php" class="btn-nav-login <?= ($currentPage === 'connexion') ? 'is-active' : '' ?>">Connexion</a>
+                <a href="<?= $basePath ?>menus.php" class="btn-nav-cta">Commander</a>
             <?php endif; ?>
         </div>
 

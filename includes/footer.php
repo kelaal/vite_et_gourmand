@@ -2,6 +2,14 @@
 /**
  * Composant Footer réutilisable pour toutes les pages de Vite & Gourmand
  */
+
+// Détecter le chemin de base selon l'emplacement du script
+$basePath = '';
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+if (str_contains($scriptName, '/employe/') || str_contains($scriptName, '/admin/')) {
+    $basePath = '../';
+}
+
 if (!isset($horaires) && isset($pdo)) {
     try {
         $stmtHoraires = $pdo->query("SELECT * FROM horaire ORDER BY ordre_jour ASC");
@@ -17,7 +25,7 @@ if (!isset($horaires) && isset($pdo)) {
 
         <!-- Colonne 1 : Brand & Présentation -->
         <div class="footer__brand">
-            <img src="public/img/logo.svg" alt="Vite & Gourmand" class="footer__logo" width="150" height="48">
+            <img src="<?= $basePath ?>public/img/logo.svg" alt="Vite & Gourmand" class="footer__logo" width="150" height="48">
             <p>L'excellence gastronomique à Bordeaux. Traiteur d'exception sur-mesure pour vos mariages, événements professionnels et moments précieux.</p>
         </div>
 
@@ -25,10 +33,10 @@ if (!isset($horaires) && isset($pdo)) {
         <div class="footer__nav">
             <h3>Navigation</h3>
             <ul>
-                <li><a href="index.php">Accueil</a></li>
-                <li><a href="menus.php">Nos Menus</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a href="connexion.php">Espace Client / Équipe</a></li>
+                <li><a href="<?= $basePath ?>index.php">Accueil</a></li>
+                <li><a href="<?= $basePath ?>menus.php">Nos Menus</a></li>
+                <li><a href="<?= $basePath ?>contact.php">Contact</a></li>
+                <li><a href="<?= $basePath ?>connexion.php">Espace Client / Équipe</a></li>
             </ul>
         </div>
 
@@ -71,11 +79,11 @@ if (!isset($horaires) && isset($pdo)) {
     <div class="footer__bottom">
         <p>&copy; <?= date('Y') ?> Vite & Gourmand — Tous droits réservés.</p>
         <div class="footer__links">
-            <a href="mentions-legales.php">Mentions Légales</a>
+            <a href="<?= $basePath ?>mentions-legales.php">Mentions Légales</a>
             <span>|</span>
-            <a href="cgv.php">CGV</a>
+            <a href="<?= $basePath ?>cgv.php">CGV</a>
             <span>|</span>
-            <a href="contact.php">Plan d'accès</a>
+            <a href="<?= $basePath ?>contact.php">Plan d'accès</a>
         </div>
     </div>
 </footer>
